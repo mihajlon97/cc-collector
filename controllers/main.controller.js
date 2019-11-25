@@ -11,9 +11,9 @@ const persons = async function(req, res){
 		return ReE(res, { message: 'INVALID_DATA' });
 
 	// Ping Service Registry (cPanel) to get location of service with that id
-	let [err, response] = await to(axios.get('http://cpanel.default.svc.cluster.local:1234/sections/' + body.section));
+	let [err, response] = await to(axios.get('http://cpanel:1234/sections/' + body.section));
 	if (err) return ReE(res, err);
-	return ReS(res, {message: 'Success CPANEL', data: response.data});
+
 	// Forward persons to right section and use location(address) from service registry
 	let sectionAddress = response.data.section.address;
 	[err, response] = await to(axios.post(sectionAddress + '/persons', {
